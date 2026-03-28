@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ağız Mirası - Ankara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Genel Stil */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Lora', serif;
+            background-color: #fdf5e6;
+            color: #3e2723;
+            overflow: hidden; 
+        }
+
+        .panel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fdf5e6;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1;
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .panel.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        /* 1. GİRİŞ PANELİ */
+        #entry-panel {
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            background: radial-gradient(circle, #fdf5e6 0%, #ecdcb0 100%);
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 5.5rem); margin: 0; color: #5d4037; }
+        .subtitle { font-style: italic; font-size: 1.2rem; max-width: 700px; color: #795548; margin: 15px auto; padding: 0 20px; line-height: 1.5; }
+
+        /* 2. BİLGİ VE MENÜ PANELİ */
+        #menu-panel {
+            padding: 100px 20px 200px 20px;
+            text-align: center;
+            display: block; 
+        }
+
+        .content-section { 
+            max-width: 850px; 
+            margin: 0 auto 60px auto; 
+            line-height: 1.9;
+        }
+
+        h2 { 
+            font-family: 'Playfair Display', serif; 
+            border-bottom: 2px solid #d7ccc8; 
+            padding-bottom: 10px; 
+            color: #4e342e;
+            display: inline-block;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+        }
+
+        /* BUTONLAR */
+        .btn-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            align-items: center; 
+            width: 100%;
+            margin-top: 40px;
+            padding-bottom: 100px;
+            min-height: 350px;
+        }
+
+        .nav-btn {
+            width: 90%; 
+            max-width: 450px; 
+            padding: 20px;
+            background-color: #6d4c41; 
+            color: white; 
+            text-align: center;
+            text-decoration: none; 
+            font-weight: bold; 
+            border-radius: 8px;
+            cursor: pointer; 
+            border: none; 
+            font-family: 'Lora', serif; 
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .nav-btn:hover { 
+            background-color: #3e2723; 
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-special { background-color: #8d6e63; }
+
+        /* FORM VE LİSTE STİLLERİ */
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 500px;
+            margin-top: 100px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #d7ccc8;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Lora', serif;
+        }
+
+        .save-btn {
+            background: #4e342e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .add-icon-btn {
+            font-size: 4rem;
+            color: #6d4c41;
+            cursor: pointer;
+            margin-top: 100px;
+            transition: 0.3s;
+        }
+        .add-icon-btn:hover { transform: scale(1.2); }
+
+        .data-card {
+            background: white;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: left;
+            border-left: 5px solid #6d4c41;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        /* GERİ BUTONU */
+        .back-btn {
+            position: fixed; 
+            top: 25px; 
+            left: 25px;
+            padding: 12px 20px; 
+            background: rgba(141, 110, 99, 0.9); 
+            color: white;
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            z-index: 1000;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #5d4037; }
+
+        iframe { 
+            width: 100%; 
+            height: calc(100% - 70px); 
+            border: none; 
+            margin-top: 70px; 
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GİRİŞ PANELİ -->
+    <div id="entry-panel" class="panel active" onclick="showPanel('menu-panel')">
+        <h1>Ağız Mirası</h1>
+        <p class="subtitle">Ankara Ağızları Mirasının Dijital Belgelenmesi ve Kültür Haritasının Oluşturulması</p>
+        <p style="margin-top:50px; font-size: 0.9rem; letter-spacing: 4px; color: #a1887f; animation: pulse 2s infinite; font-weight: bold;">KEŞFETMEK İÇİN TIKLAYIN</p>
+    </div>
+
+    <!-- MENÜ VE BİLGİ PANELİ -->
+    <div id="menu-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('entry-panel')">← ANA SAYFA</button>
+        
+        <div class="content-section">
+            <h2>PROJENİN ÇIKIŞ NOKTASI</h2>
+            <p>Ankara ağızlarının tarihsel, kültürel ve dilbilimsel önemine rağmen günümüzde hızlı kentleşme, göç, iletişim teknolojileri ve kabul görmüş dil biçimi baskısı nedeniyle giderek kaybolma tehlikesiyle karşı karşıya olması ciddi bir tehdit olarak görülmüştür. </p>
+            <p>Türkiye’de ağız araştırmalarının hâlâ yöntemsel eksiklikler taşıması, dijital arşivleme, etkileşimli haritalama ve çevrim içi erişilebilirlik gibi modern yöntemlerin yeterince kullanılmaması da önemli bir sorun olarak ortaya konmaktadır.</p>
+            <p>Bunun yanında UNESCO’nun dünyadaki dillerin yok olma riskiyle ilgili uyarıları ve yerel dillerin dijital olarak belgelenmesi gerektiğine ilişkin küresel çağrı, projeyi gerekli kılan başka bir etkendir. Dolayısıyla proje şu ihtiyaçtan doğmuştur: Ankara ağızlarını kaybolmadan önce bilimsel olarak belgelemek, dijital ortama aktarmak ve geniş kitlelere erişilebilir hâle getirerek kültürel sürdürülebilirliğe katkı sağlamak.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>PROJENİN AMACI</h2>
+            <p>Ankara’nın ağız çeşitliliğini derleyerek dijital teknolojiler aracılığıyla tanıtmak, öğretmek ve gelecek kuşaklara aktarmak; böylece yerel dil mirasının korunmasına ve kültürel sürdürülebilirliğe katkı sağlamak amaçlanmaktadır.</p>
+        </div>
+
+        <div class="btn-container">
+            <button class="nav-btn" onclick="showPanel('map-panel')">📍 HARİTA</button>
+            <button class="nav-btn" onclick="showPanel('data-panel')">📊 VERİ TABANI</button>
+            <button class="nav-btn" onclick="showPanel('game-panel')">🎮 AĞIZ MİRASI OYUNU</button>
+            <button class="nav-btn btn-special" onclick="showPanel('add-portal-panel')">✍️ KENDİ AĞZINI EKLE</button>
+            <button class="nav-btn btn-special" onclick="showPanel('user-list-panel'); loadUserList();">📂 SİZDEN GELENLER</button>
+        </div>
+    </div>
+
+    <!-- HARİTA PANELİ -->
+    <div id="map-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
+        <iframe src="https://umap.openstreetmap.fr/tr/map/agz-miras-haritas_1351782#15/39.960512/32.861781"></iframe>
+    </div>
+
+    <!-- VERİ TABANI PANELİ -->
+    <div id="data-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
+        <iframe src="https://docs.google.com/spreadsheets/d/1HI7HPI0iOa1z0B1tLzT18nhEiw4x72C177tgqwGSNgs/preview"></iframe>
+    </div>
+
+    <!-- OYUN PANELİ -->
+    <div id="game-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
+        <iframe src="https://koyuncuzehra415.github.io/a-zmiras-kelimeoyunum/" allow="fullscreen"></iframe>
+    </div>
+
+    <!-- EKLEME PORTALI -->
+    <div id="add-portal-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
+        <div class="add-icon-btn" onclick="showPanel('form-panel')">➕</div>
+        <p style="font-weight: bold; color: #6d4c41;">Yeni Bir Ağız Eklemek İçin Artıya Tıklayın</p>
+    </div>
+
+    <!-- FORM PANELİ -->
+    <div id="form-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('add-portal-panel')">← GERİ</button>
+        <div class="form-container">
+            <h3 style="font-family: 'Playfair Display', serif; color: #4e342e;">Ağız Kayıt Formu</h3>
+            <input type="text" id="userName" class="form-input" placeholder="Adınız Soyadınız">
+            <input type="text" id="userWord" class="form-input" placeholder="Ağız (Kelime/İfade)">
+            <input type="text" id="userMean" class="form-input" placeholder="Anlamı">
+            <input type="text" id="userLocation" class="form-input" placeholder="Alındığı Yer (İlçe/Köy)">
+            <button class="save-btn" onclick="saveData()">KAYDET</button>
+        </div>
+    </div>
+
+    <!-- SİZDEN GELENLER LİSTESİ -->
+    <div id="user-list-panel" class="panel">
+        <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
+        <h2 style="margin-top:100px;">SİZDEN GELENLER</h2>
+        <div id="list-render-area" style="width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 50px;">
+        </div>
+    </div>
+
+    <script>
+        function showPanel(panelId) {
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => { panel.classList.remove('active'); });
+            const activePanel = document.getElementById(panelId);
+            activePanel.classList.add('active');
+            activePanel.scrollTo(0, 0);
+        }
+
+        function saveData() {
+            const name = document.getElementById('userName').value;
+            const word = document.getElementById('userWord').value;
+            const mean = document.getElementById('userMean').value;
+            const loc = document.getElementById('userLocation').value;
+
+            if(!name || !word || !mean || !loc) {
+                alert("Lütfen tüm alanları doldurun!");
+                return;
+            }
+
+            const entry = { name, word, mean, loc };
+            let savedEntries = JSON.parse(localStorage.getItem('agizMirasiData')) || [];
+            savedEntries.push(entry);
+            localStorage.setItem('agizMirasiData', JSON.stringify(savedEntries));
+
+            alert("Ağız başarıyla kaydedildi!");
+            
+            document.getElementById('userName').value = "";
+            document.getElementById('userWord').value = "";
+            document.getElementById('userMean').value = "";
+            document.getElementById('userLocation').value = "";
+            
+            showPanel('menu-panel');
+        }
+
+        function loadUserList() {
+            const container = document.getElementById('list-render-area');
+            container.innerHTML = "";
+            let savedEntries = JSON.parse(localStorage.getItem('agizMirasiData')) || [];
+
+            if(savedEntries.length === 0) {
+                container.innerHTML = "<p>Henüz kayıtlı ağız yok. İlkini sen ekle!</p>";
+                return;
+            }
+
+            savedEntries.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'data-card';
+                card.innerHTML = `
+                    <div style="font-size: 1.3rem; color: #4e342e; margin-bottom: 5px;"><strong>${item.word}</strong></div>
+                    <div style="margin-bottom: 3px;"><strong>Anlamı:</strong> ${item.mean}</div>
+                    <div style="margin-bottom: 3px;"><strong>Yer:</strong> ${item.loc}</div>
+                    <div style="font-style: italic; color: #8d6e63; font-size: 0.9rem; margin-top: 10px; text-align: right;">— ${item.name}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
