@@ -209,27 +209,19 @@
 </head>
 <body>
 
-    <!-- GİRİŞ PANELİ -->
     <div id="entry-panel" class="panel active" onclick="showPanel('menu-panel')">
         <h1>Ağız Mirası</h1>
         <p class="subtitle">Ankara Ağızları Mirasının Dijital Belgelenmesi ve Kültür Haritasının Oluşturulması</p>
         <p style="margin-top:50px; font-size: 0.9rem; letter-spacing: 4px; color: #a1887f; animation: pulse 2s infinite; font-weight: bold;">KEŞFETMEK İÇİN TIKLAYIN</p>
     </div>
 
-    <!-- MENÜ VE BİLGİ PANELİ -->
     <div id="menu-panel" class="panel">
         <button class="back-btn" onclick="showPanel('entry-panel')">← ANA SAYFA</button>
         
         <div class="content-section">
             <h2>PROJENİN ÇIKIŞ NOKTASI</h2>
             <p>Ankara ağızlarının tarihsel, kültürel ve dilbilimsel önemine rağmen günümüzde hızlı kentleşme, göç, iletişim teknolojileri ve kabul görmüş dil biçimi baskısı nedeniyle giderek kaybolma tehlikesiyle karşı karşıya olması ciddi bir tehdit olarak görülmüştür. </p>
-            <p>Türkiye’de ağız araştırmalarının hâlâ yöntemsel eksiklikler taşıması, dijital arşivleme, etkileşimli haritalama ve çevrim içi erişilebilirlik gibi modern yöntemlerin yeterince kullanılmaması da önemli bir sorun olarak ortaya konmaktadır.</p>
-            <p>Bunun yanında UNESCO’nun dünyadaki dillerin yok olma riskiyle ilgili uyarıları ve yerel dillerin dijital olarak belgelenmesi gerektiğine ilişkin küresel çağrı, projeyi gerekli kılan başka bir etkendir. Dolayısıyla proje şu ihtiyaçtan doğmuştur: Ankara ağızlarını kaybolmadan önce bilimsel olarak belgelemek, dijital ortama aktarmak ve geniş kitlelere erişilebilir hâle getirerek kültürel sürdürülebilirliğe katkı sağlamak.</p>
-        </div>
-
-        <div class="content-section">
-            <h2>PROJENİN AMACI</h2>
-            <p>Ankara’nın ağız çeşitliliğini derleyerek dijital teknolojiler aracılığıyla tanıtmak, öğretmek ve gelecek kuşaklara aktarmak; böylece yerel dil mirasının korunmasına ve kültürel sürdürülebilirliğe katkı sağlamak amaçlanmaktadır.</p>
+            <p>UNESCO’nun dünyadaki dillerin yok olma riskiyle ilgili uyarıları ve yerel dillerin dijital olarak belgelenmesi gerektiğine ilişkin küresel çağrı, projeyi gerekli kılan başka bir etkendir.</p>
         </div>
 
         <div class="btn-container">
@@ -241,36 +233,32 @@
         </div>
     </div>
 
-    <!-- HARİTA PANELİ -->
     <div id="map-panel" class="panel">
         <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
-        <iframe src="https://umap.openstreetmap.fr/tr/map/agz-miras-haritas_1351782#15/39.960512/32.861781"></iframe>
+        <iframe src="https://umap.openstreetmap.fr/en/map/agz-miras-haritas_1325017#13/39.9465/32.8755"></iframe>
     </div>
 
-    <!-- VERİ TABANI PANELİ -->
     <div id="data-panel" class="panel">
         <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
         <iframe src="https://docs.google.com/spreadsheets/d/1HI7HPI0iOa1z0B1tLzT18nhEiw4x72C177tgqwGSNgs/preview"></iframe>
     </div>
 
-    <!-- OYUN PANELİ -->
     <div id="game-panel" class="panel">
         <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
         <iframe src="https://koyuncuzehra415.github.io/a-zmiras-kelimeoyunum/" allow="fullscreen"></iframe>
     </div>
 
-    <!-- EKLEME PORTALI -->
     <div id="add-portal-panel" class="panel">
         <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
         <div class="add-icon-btn" onclick="showPanel('form-panel')">➕</div>
         <p style="font-weight: bold; color: #6d4c41;">Yeni Bir Ağız Eklemek İçin Artıya Tıklayın</p>
     </div>
 
-    <!-- FORM PANELİ -->
     <div id="form-panel" class="panel">
         <button class="back-btn" onclick="showPanel('add-portal-panel')">← GERİ</button>
         <div class="form-container">
             <h3 style="font-family: 'Playfair Display', serif; color: #4e342e;">Ağız Kayıt Formu</h3>
+            <p style="font-size: 0.8rem; color: #8d6e63;">* Kaydedilen bilgiler şu an için tarayıcınızda saklanır.</p>
             <input type="text" id="userName" class="form-input" placeholder="Adınız Soyadınız">
             <input type="text" id="userWord" class="form-input" placeholder="Ağız (Kelime/İfade)">
             <input type="text" id="userMean" class="form-input" placeholder="Anlamı">
@@ -279,7 +267,6 @@
         </div>
     </div>
 
-    <!-- SİZDEN GELENLER LİSTESİ -->
     <div id="user-list-panel" class="panel">
         <button class="back-btn" onclick="showPanel('menu-panel')">← GERİ DÖN</button>
         <h2 style="margin-top:100px;">SİZDEN GELENLER</h2>
@@ -312,7 +299,7 @@
             savedEntries.push(entry);
             localStorage.setItem('agizMirasiData', JSON.stringify(savedEntries));
 
-            alert("Ağız başarıyla kaydedildi!");
+            alert("Ağız başarıyla kaydedildi! (Not: Verileriniz tarayıcınıza kaydedildi.)");
             
             document.getElementById('userName').value = "";
             document.getElementById('userWord').value = "";
@@ -328,7 +315,7 @@
             let savedEntries = JSON.parse(localStorage.getItem('agizMirasiData')) || [];
 
             if(savedEntries.length === 0) {
-                container.innerHTML = "<p>Henüz kayıtlı ağız yok. İlkini sen ekle!</p>";
+                container.innerHTML = "<p>Henüz yerel bir kayıt yok. İlkini sen ekle!</p>";
                 return;
             }
 
