@@ -100,10 +100,11 @@
             cursor: pointer; 
             border: none; 
             font-family: 'Lora', serif; 
-            font-size: 1.1rem;
+            font-size: 1rem; /* Uzun metinler için font hafif küçültüldü */
             letter-spacing: 1px;
             transition: all 0.3s ease;
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            text-transform: uppercase;
         }
 
         .nav-btn:hover { 
@@ -167,8 +168,8 @@
         </div>
 
         <div class="btn-container">
-            <button class="nav-btn" onclick="showPanel('map-panel')">📍 HARİTA</button>
-            <button class="nav-btn" onclick="showPanel('data-panel')">📊 VERİ TABANI</button>
+            <button class="nav-btn" onclick="showPanel('map-panel')">📍 KÜLTÜR HARİTASI</button>
+            <button class="nav-btn" onclick="showPanel('data-panel')">📊 ANKARA AĞIZLARI VERİ TABANI</button>
             <button class="nav-btn" onclick="showPanel('game-panel')">🎮 AĞIZ MİRASI OYUNU</button>
             <button class="nav-btn btn-special" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdzBT389SSJ-1Fxo8vm2eFcxZqUuleNQnHVPx2C5kbRtrJsfg/viewform?usp=sf_link', '_blank')">✍️ KENDİ AĞZINI EKLE</button>
             <button class="nav-btn btn-special" onclick="showPanel('user-list-panel')">📂 SİZDEN GELENLER</button>
